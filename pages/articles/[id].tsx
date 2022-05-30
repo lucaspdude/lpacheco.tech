@@ -1,5 +1,4 @@
 import type { NextPage } from 'next'
-import { useState } from 'react'
 import ThemeSwitcher from '../../components/themeSwithcer';
 
 

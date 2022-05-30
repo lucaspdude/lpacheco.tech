@@ -59,8 +59,7 @@ const Skill:FunctionComponent<ArticleProps> = ({
     )
 
 }
-const SkillsCommand: FunctionComponent<CommandProps> = ({
-    callback
+const SkillsCommand: FunctionComponent = ({
 }) => {
 
 

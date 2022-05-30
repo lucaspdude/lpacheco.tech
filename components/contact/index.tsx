@@ -2,12 +2,7 @@ import { FunctionComponent } from "react";
 
 
 
-export interface CommandProps{
-    callback?: (commandName: string) => void
-
-}
-const ContactCommand: FunctionComponent<CommandProps> = ({
-    callback
+const ContactCommand: FunctionComponent = ({
 }) => {
 
     

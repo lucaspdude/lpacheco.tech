@@ -61,15 +61,15 @@ const Terminal: FunctionComponent<TerminalProps> = ({
         },
         {
             key: "articles",
-            content:  <ArticlesCommand callback={(commandName:string) =>handleFillForm(commandName)} />,
+            content:  <ArticlesCommand  />,
         },
         {
             key: "skills",
-            content:  <SkillsCommand callback={(commandName:string) =>handleFillForm(commandName)} />,
+            content:  <SkillsCommand  />,
         },
         {
             key: "contact",
-            content:  <ContactCommand callback={(commandName:string) =>handleFillForm(commandName)} />,
+            content:  <ContactCommand />,
         },
         {
             key: "clear",

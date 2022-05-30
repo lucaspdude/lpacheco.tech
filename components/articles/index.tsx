@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
 
@@ -38,8 +37,8 @@ const Article:FunctionComponent<ArticleProps> = ({
     )
 
 }
-const ArticlesCommand: FunctionComponent<CommandProps> = ({
-    callback
+const ArticlesCommand: FunctionComponent = ({
+    
 }) => {
 
 
