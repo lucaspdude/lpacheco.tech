@@ -14,6 +14,22 @@
     "ln2": "command is not reconized.",
     "ln3": "You can type (or click) ",
     "ln4": "to view a list of available commands."
+  },
+  "help": {
+    "ln1": "Here is a list of helpfull comands:",
+    "ln2": "Displays contact information",
+    "ln3": "View skills and proficiency levels",
+    "ln4": "Displays the initial message",
+    "ln5": "Themes",
+    "ln6": "You can change the theme (dark or light) by using the change-theme command",
+    "ln7": "Switches the theme between light and dark",
+    "ln8": "Languages",
+    "ln9": "You can change the language by using one of the following commands"
+  },
+  "contact": {
+    "ln1": "Feel free to contact me on the channels provided bellow",
+    "ln2": "Email",
+    "ln3": "Phone"
   }
  }
  

@@ -14,6 +14,22 @@
     "ln2": "no se foi reconhecido.",
     "ln3": "Puedes escribir (ou clicar) ",
     "ln4": "para ver una lista de comandos útiles."
+  },
+  "help": {
+    "ln1": "Aquí hay una lista de comandos útiles:",
+    "ln2": "Muestra información de contacto",
+    "ln3": "Ver habilidades y niveles de competencia",
+    "ln4": "Muestra el mensaje inicial",
+    "ln5": "Temas",
+    "ln6": "Puedes cambiar el tema (oscuro o claro) usando el comando de cambio de tema",
+    "ln7": "Cambia el tema entre claro y oscuro",
+    "ln8": "Idiomas",
+    "ln9": "Puedes cambiar el idioma usando uno de los siguientes comandos"
+  },
+  "contact": {
+    "ln1": "Fique à vontade para entrar em contato, através dos meios abaixo",
+    "ln2": "Email",
+    "ln3": "Telefone"
   }
  }
  

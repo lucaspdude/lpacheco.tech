@@ -1,4 +1,5 @@
 import { FunctionComponent } from "react";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -32,25 +33,27 @@ const HelpCommand: FunctionComponent<CommandProps> = ({
 }) => {
 
 
+    const {t} = useTranslation();
+
     return (
         <div>
-            <span className='text-2xl '>Here is a list of helpfull comands: </span>
+            <span className='text-2xl '>{t('help.ln1')}</span>
             <br />
             
-            <HelpItem name="contact" callback={() => callback("contact")} text="Displays contact information" />
-            <HelpItem name="skills" callback={() => callback("skills")} text="View skills and proficiency levels" />
-            <HelpItem name="articles" callback={() => callback("articles")} text="List of articles written" />
+            <HelpItem name="contact" callback={() => callback("contact")} text={t('help.ln2')} />
+            <HelpItem name="skills" callback={() => callback("skills")} text={t('help.ln3')} />
 
 
-            <HelpItem name="welcome" callback={() => callback("welcome")} text="Displays the initial message" />
+
+            <HelpItem name="welcome" callback={() => callback("welcome")} text={t('help.ln4')} />
 
 
-            <h3 className="py-3 border-t border-white/25 text-2xl dark:text-broom-500 text-regal-blue-500">Themes</h3>
-            <p>You can change the theme (dark or light) by using the change-theme command</p>
-            <HelpItem name="change-theme" callback={() => callback("change-theme")} text="Switches the theme between light and dark" />
+            <h3 className="py-3 border-t border-white/25 text-2xl dark:text-broom-500 text-regal-blue-500">{t('help.ln5')}</h3>
+            <p>{t('help.ln6')}</p>
+            <HelpItem name="change-theme" callback={() => callback("change-theme")} text={t('help.ln7')} />
 
-            <h3 className="py-3 border-t border-white/25 text-2xl dark:text-broom-500 text-regal-blue-500">Languages</h3>
-            <p>You can change the language by using one of the following commands</p>
+            <h3 className="py-3 border-t border-white/25 text-2xl dark:text-broom-500 text-regal-blue-500">{t('help.ln8')}</h3>
+            <p>{t('help.ln9')}</p>
             <HelpItem name="language-pt" callback={() => callback("language-pt")} text="Displays the initial message" />
             <HelpItem name="language-en" callback={() => callback("language-en")} text="Displays the initial message" />
             <HelpItem name="language-es" callback={() => callback("language-es")} text="Displays the initial message" />

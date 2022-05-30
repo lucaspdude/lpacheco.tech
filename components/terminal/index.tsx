@@ -3,10 +3,9 @@ import { FunctionComponent, KeyboardEvent, ReactNode, useEffect, useRef, useStat
 import HelpCommand from "../help";
 import WelcomeCommand from "../welcome";
 import ErrorCommand from "../error";
-import ArticlesCommand from "../articles";
 import SkillsCommand from "../skills";
 import ContactCommand from "../contact";
-import { FiTerminal } from "react-icons/fi";
+import { FiSend, FiTerminal } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/router";
 import { useTheme } from "next-themes";
@@ -85,10 +84,6 @@ const Terminal: FunctionComponent<TerminalProps> = ({
         {
             key: "help",
             content:  <HelpCommand callback={(commandName:string) =>handleFillForm(commandName)} />,
-        },
-        {
-            key: "articles",
-            content:  <ArticlesCommand  />,
         },
         {
             key: "skills",
@@ -324,6 +319,17 @@ const Terminal: FunctionComponent<TerminalProps> = ({
         event.preventDefault()
     }
 
+    const handlePressSendButton = () => {
+        console.log('clicked')
+        console.log(inputRef.current.value)
+
+        if(inputRef.current.value !== ""){
+            
+            handleExecuteCommand(inputRef.current?.value)
+
+        }
+    }
+
 
     const emojiLang = {
         pt: '🇧🇷',
@@ -349,17 +355,30 @@ const Terminal: FunctionComponent<TerminalProps> = ({
                     </div>
                 ))}
 
-                <div className="flex items-center pb-12 mb-12">
+                <div className="md:flex md:items-center pb-12 mb-12">
                     <div className="flex items-center">
                         <span className="px-3">{emojiLang[currentLang]}</span>
                         <span className="text-red-500 font-bold">{t('misc.visitor')}</span>
                         <span>$: </span>
                     </div>
-                    <input ref={inputRef} type="text" className={`w-full my-3 px-3 bg-transparent focus:ring-0 focus:ring-offset-0 focus:border-0 outline-0 caret-regal-blue-500 dark:caret-broom-500 ${commandExists ? 'text-green-500 text-bold' : 'text-red-500' }  `} onKeyDown={(e) => handleCommand(e)} onChange={handleCheckCommandExists}  />
+                    <div className="flex items-center w-full">
+                    <input ref={inputRef} type="text" className={`
+                     border-b-2 border-white
+                     md:border-0
+                    
+                    w-full my-3 px-3 bg-transparent md:focus:ring-0 md:focus:ring-offset-0 md:focus:border-0 outline-0 caret-regal-blue-500 dark:caret-broom-500 ${commandExists ? 'text-green-800 dark:text-green-500  text-bold' : 'text-red-500' }  `} onKeyDown={(e) => handleCommand(e)} onChange={handleCheckCommandExists}  />
+                    <div className="md:hidden">
+                        <button onClick={handlePressSendButton}>
+                            <FiSend size={24} />
+                        </button>
+                    </div>
+                    </div>
+                    
                     
                 </div>
                 <div className="pb-12"></div>
-            
+                <div className="pb-12" ref={scrollBottomRef} />
+
 
                 <div className='fixed bottom-0 my-3 left-3 mx-3'>
         
@@ -370,7 +389,6 @@ const Terminal: FunctionComponent<TerminalProps> = ({
                 </div>
 
             </div>
-            <div className="pb-12" ref={scrollBottomRef} />
 
         </div>
     )
