@@ -1,0 +1,19 @@
+{
+  "misc": {
+    "visitor": "visitante"
+  },
+  "welcome": {
+    "welcome_ln1": "Bienvenido a lpacheco.tech",
+    "welcome_ln2": "sitio web fue creado para probar una idea y con el propósito de ser utilizado como un portafolio para mis proyectos personales y cosas que me apasionan.",
+    "welcome_ln3": "Puedes comenzar escribiendo un comando en el siguiente mensaje.",
+    "welcome_ln4": "Para ver una lista de comandos útiles, escribe",
+    "welcome_ln5": "(ou clique)"
+  },
+  "error": {
+    "ln1": "El comando",
+    "ln2": "no se foi reconhecido.",
+    "ln3": "Puedes escribir (ou clicar) ",
+    "ln4": "para ver una lista de comandos útiles."
+  }
+ }
+ 

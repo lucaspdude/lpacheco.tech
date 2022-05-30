@@ -1,0 +1,20 @@
+{
+  "misc": {
+    "visitor": "visitor"
+  },
+  "welcome": {
+    "welcome_ln1": "Welcome to lpacheco.tech",
+    "welcome_ln2": "This website was made to test an idea and with the purpose to be used as a portfolio for my personal projects and stuff I'm passionate about.",
+    "welcome_ln3": "You can start by typing a command on the prompt bellow.",
+    "welcome_ln4": "To view a list of helpfull commands, type",
+    "welcome_ln5": "(or click)"
+  },
+  "error": {
+    "ln1": "The",
+    "ln2": "command is not reconized.",
+    "ln3": "You can type (or click) ",
+    "ln4": "to view a list of available commands."
+  }
+ }
+ 
+ 

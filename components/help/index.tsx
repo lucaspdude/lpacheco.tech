@@ -39,10 +39,21 @@ const HelpCommand: FunctionComponent<CommandProps> = ({
             
             <HelpItem name="contact" callback={() => callback("contact")} text="Displays contact information" />
             <HelpItem name="skills" callback={() => callback("skills")} text="View skills and proficiency levels" />
-            {/* <HelpItem name="portfolio" callback={() => callback("portfolio")} text="Displays portfolio" /> */}
-            {/* <HelpItem name="social" callback={() => callback("social")} text="Displays links for social media" /> */}
             <HelpItem name="articles" callback={() => callback("articles")} text="List of articles written" />
+
+
             <HelpItem name="welcome" callback={() => callback("welcome")} text="Displays the initial message" />
+
+
+            <h3 className="py-3 border-t border-white/25 text-2xl dark:text-broom-500 text-regal-blue-500">Themes</h3>
+            <p>You can change the theme (dark or light) by using the change-theme command</p>
+            <HelpItem name="change-theme" callback={() => callback("change-theme")} text="Switches the theme between light and dark" />
+
+            <h3 className="py-3 border-t border-white/25 text-2xl dark:text-broom-500 text-regal-blue-500">Languages</h3>
+            <p>You can change the language by using one of the following commands</p>
+            <HelpItem name="language-pt" callback={() => callback("language-pt")} text="Displays the initial message" />
+            <HelpItem name="language-en" callback={() => callback("language-en")} text="Displays the initial message" />
+            <HelpItem name="language-es" callback={() => callback("language-es")} text="Displays the initial message" />
            
             
         </div>

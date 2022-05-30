@@ -6,6 +6,10 @@ import ErrorCommand from "../error";
 import ArticlesCommand from "../articles";
 import SkillsCommand from "../skills";
 import ContactCommand from "../contact";
+import { FiTerminal } from "react-icons/fi";
+import { useTranslation } from "react-i18next";
+import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
 
 interface TerminalProps{
     handleActiveTerminal: (index: number) => void,
@@ -17,6 +21,8 @@ interface Command {
     key: string
     content: string | ReactNode
     isClearCommand?: boolean
+    isLanguageCommand?: boolean
+    isChangeThemeCommand?: boolean
 }
 
 interface StackItem{
@@ -29,6 +35,7 @@ const Terminal: FunctionComponent<TerminalProps> = ({
     index
 }) => {
 
+    const { t, i18n } = useTranslation('common')
 
 
         const [commandHistory, setCommandHistory] = useState<string[]>([]);
@@ -54,6 +61,26 @@ const Terminal: FunctionComponent<TerminalProps> = ({
         {
             key: "welcome",
             content:  <WelcomeCommand callback={(commandName:string) =>handleFillForm(commandName)} />,
+        },
+        {
+            key: "change-theme",
+            content: "theme",
+            isChangeThemeCommand: true
+        },
+        {
+            key: "language-pt",
+            content: "pt",
+            isLanguageCommand: true
+        },
+        {
+            key: "language-es",
+            content: "es",
+            isLanguageCommand: true
+        },
+        {
+            key: "language-en",
+            content: "en",
+            isLanguageCommand: true
         },
         {
             key: "help",
@@ -99,17 +126,82 @@ const Terminal: FunctionComponent<TerminalProps> = ({
     }
 
 
+    const router = useRouter();
+
+    const [currentLang, setCurrentLang] = useState<string>('pt')
+
+
+
+    useEffect(() => {
+        const localStorageHasLanguage = localStorage.getItem('@blockchain.lang')
+    
+        if (localStorageHasLanguage) {
+          const parsedLanguage = JSON.parse(localStorageHasLanguage)
+          handleSwithLanguage(parsedLanguage)
+        }
+      }, [])
+
+    const handleSwithLanguage = (language: string) => {
+        i18n.changeLanguage(language)
+        setCurrentLang(language)
+        localStorage.setItem('@blockchain.lang', JSON.stringify(language))
+        router.push(router.route, router.route, { locale: language })
+        handleFocus();
+      }
+
+
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const [enabled, setEnabled] = useState<boolean>(false)
+  const { systemTheme, theme, setTheme } = useTheme()
+
+  const handleChangeTheme = () => {
+    const currentTheme = theme === 'system' ? systemTheme : theme
+
+    if (currentTheme === 'dark') {
+      setTheme('light')
+      localStorage.setItem('@blockchain.theme', JSON.stringify('light'))
+    } else {
+      setTheme('dark')
+      localStorage.setItem('@blockchain.theme', JSON.stringify('dark'))
+    }
+  }
+
+  useEffect(() => {
+    if (systemTheme && theme) {
+      const localstorageTheme = localStorage.getItem('@blockchain.theme')
+
+      const currentTheme = theme === 'system' ? systemTheme : theme
+
+      if (currentTheme === 'dark') {
+        setEnabled(true)
+      } else if (
+        currentTheme === 'light' &&
+        localstorageTheme &&
+        JSON.parse(localstorageTheme) === 'dark'
+      ) {
+        setEnabled(true)
+      } else {
+        setEnabled(false)
+      }
+    }
+  }, [systemTheme, theme])
+
+      
+
     const inputRef = useRef<HTMLInputElement>(null);
     const scrollBottomRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
+
+    const mountedComponents = useRef<HTMLDivElement>(null);
 
     const handleExecuteCommand = (commandString: string) => {
 
         const currentStack = stack;
-        console.log(currentStack.length);
 
 
         const filteredCommand = commands.filter((command)=> {
-            return command.key === commandString
+            return command.key === commandString.toLowerCase()
         })
 
 
@@ -125,11 +217,18 @@ const Terminal: FunctionComponent<TerminalProps> = ({
             inputRef.current.value = ""
             return;
         }
+
        
         if(filteredCommand.length > 0 && filteredCommand[0].isClearCommand){
             setStack([]);
 
-        }else{
+        }else if(filteredCommand.length >0 && filteredCommand[0].isLanguageCommand){
+            handleSwithLanguage(filteredCommand[0].content.toString());
+        }
+        else if(filteredCommand.length >0 && filteredCommand[0].isChangeThemeCommand){
+            handleChangeTheme();
+        }
+        else{
             
             setStack([...currentStack, {
                 content: filteredCommand[0].content,
@@ -155,10 +254,6 @@ const Terminal: FunctionComponent<TerminalProps> = ({
 
       useEffect(( ) => {
         scrollToBottom();
-      }, [stack])
-
-      useEffect(() => {
-        console.log(stack)
       }, [stack])
 
     const handleCommand = (event: KeyboardEvent) => {
@@ -224,36 +319,58 @@ const Terminal: FunctionComponent<TerminalProps> = ({
 
     }
 
+    const handleMountedComponentClicks = (event) => {
+        
+        event.preventDefault()
+    }
 
+
+    const emojiLang = {
+        pt: '🇧🇷',
+        en: '🇺🇸',
+        es: '🇪🇸',
+      }
 
     return(
-        <div className={`border-2 overflow-y-scroll h-full ${isActive ? ' ring-2 ring-red-500' : 'border-zinc-600'} `} onClick={handleFocus}>
-            <div className="px-6 py-6 ">
+        <div className={`border-2 overflow-y-scroll h-full ${isActive ? ' ring-2 ring-red-500' : 'border-zinc-600'} `} >
+            <div className="px-6 py-6 h-full " ref={containerRef} onClick={handleFocus}>
 
-            {stack && stack.length > 0 && stack.map((item, i) => (
-                <div key={i} className="border-b-2 border-white/25 pb-3 mt-3" 
-                >
-                    <span className="flex justify-end">
-                        {item.timeStamp.toLocaleTimeString()}
-                    </span>
-                    <div className="">
-                        {item.content}
+                {stack && stack.length > 0 && stack.map((item, i) => (
+                    <div key={i} className="border-b-2 border-white/25 pb-3 mt-3" 
+                    ref={mountedComponents}
+                    onClick={handleMountedComponentClicks}
+                    >
+                        <span className="flex justify-end">
+                            {item.timeStamp.toLocaleTimeString()}
+                        </span>
+                        <div className="">
+                            {item.content}
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
 
-            <div className="flex items-center">
-                <div>
-                    <span className="text-red-500 font-bold">visitor</span>
-                    <span>$: </span>
+                <div className="flex items-center pb-12 mb-12">
+                    <div className="flex items-center">
+                        <span className="px-3">{emojiLang[currentLang]}</span>
+                        <span className="text-red-500 font-bold">{t('misc.visitor')}</span>
+                        <span>$: </span>
+                    </div>
+                    <input ref={inputRef} type="text" className={`w-full my-3 px-3 bg-transparent focus:ring-0 focus:ring-offset-0 focus:border-0 outline-0 caret-regal-blue-500 dark:caret-broom-500 ${commandExists ? 'text-green-500 text-bold' : 'text-red-500' }  `} onKeyDown={(e) => handleCommand(e)} onChange={handleCheckCommandExists}  />
+                    
                 </div>
-                <input ref={inputRef} type="text" className={`w-full my-3 px-3 bg-transparent focus:ring-0 focus:ring-offset-0 focus:border-0 outline-0 caret-regal-blue-500 dark:caret-broom-500 ${commandExists ? 'text-green-500 text-bold' : 'text-red-500' }  `} onKeyDown={(e) => handleCommand(e)} onChange={handleCheckCommandExists}  />
-                <div ref={scrollBottomRef} />
-                
-            </div>
+                <div className="pb-12"></div>
             
 
+                <div className='fixed bottom-0 my-3 left-3 mx-3'>
+        
+                    <button className=" bg-broom-500 rounded-md px-3 py-3" onClick={handleFocus}>
+                        <FiTerminal size={36} color="blue" />
+                    </button>
+
+                </div>
+
             </div>
+            <div className="pb-12" ref={scrollBottomRef} />
 
         </div>
     )
